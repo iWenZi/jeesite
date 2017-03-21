@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.MerchantFeeDetailDao">
+	<sql id="merchantFeeDetailColumns">
+		merchant_id,
+  		trans_id,
+  		action_seq,
+  		amount,
+  		id,
+  		reverse_flag,
+  		merchant_fee,
+  		account_fee,
+  		fee,
+  		cal_time
+	</sql>
+	
+	<!-- 根据编号获得推广商交易 -->
+	<select id="get" resultType="MerchantFeeDetail">
+		SELECT
+			<include refid="merchantFeeDetailColumns"/>
+			
+		FROM merchant_fee_detail a
+		
+		WHERE a.id = #{id}
+	</select>
+	
+	<!-- 根据编号获得推广商交易 -->
+	<select id="findList" resultType="MerchantFeeDetail">
+		SELECT
+			<include refid="merchantFeeDetailColumns"/>
+		FROM merchant_fee_detail
+	</select>
+
+
+	<!--查询推广商分润列表 -->
+	<select  id="findMerchantFeeList" resultType="java.util.Map" parameterType="com.uns.paysys.modules.merc.entity.MerchantFeeDetailSum">
+		 select 
+		       d.merchant_id,
+		       t.trans_id,
+		       t.order_id,
+		       ca.account_type,
+		       ca.name credit_name,
+		       da.name debit_name,
+		       t.action_seq,
+		       t.trans_status,
+		       t.create_time,
+		       t.amount,
+		       t.reverse_flag,
+		       sr.fee_method spread_fee_method,
+		       decode(sr.fee_method,1,sr.fix_fee,2,sr.ratio) spread_fee,
+		       ar.fee_method account_fee_method,
+		       decode(ar.fee_method,1,ar.fix_fee,2,ar.ratio) account_fee,
+		       d.fee,
+		       t.remark
+		 from 
+		        (select * from vnv.merchant_fee_detail where 1=1
+				<if test="merchantId != null and merchantId !=''">
+					and merchant_id = #{merchantId,jdbcType=DECIMAL}
+				</if>
+		        )d
+		join vnv.transaction t
+		on d.trans_id = t.trans_id and t.trans_status = 3 
+		and t.reverse_flag is null
+		and t.create_time >= #{beginDate} and #{endDate} >= t.create_time
+		<if test="transId != null and transId !=''">
+			and t.trans_id = #{transId,jdbcType=VARCHAR}
+		</if>
+		<if test="orderId != null and orderId !=''">
+			and t.order_id = #{orderId,jdbcType=VARCHAR}
+		</if>
+		<if test="actionSeq != null and actionSeq !=''">
+			and t.action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		left join (select * from account where 
+			login_password &lt;&gt; 'test' or pay_password &lt;&gt; 'test' or remark &lt;&gt; 'import'
+			and (account_type = 'B' or account_type = 'C')
+		) ca
+		on t.credit_seq = ca.default_sub_seq
+		left join (select * from account where 
+		login_password &lt;&gt; 'test' or pay_password &lt;&gt; 'test' or remark &lt;&gt; 'import'
+		and (account_type = 'B' or account_type = 'C')
+		) da
+		on t.debit_seq = da.default_sub_seq
+		left join (select * from vnv.fee_ratio where relating_type='4') sr
+		on d.merchant_fee_id = sr.id
+		left join (select * from vnv.fee_ratio where relating_type != '4') ar
+		on d.account_fee_id = ar.id
+	</select>
+	
+	
+	
+	<!--查看推广商分润交易明细 -->
+	<select id="viewMerchantFee" parameterType="java.math.BigDecimal" resultType="java.util.Map">
+		SELECT
+			mf.merchant_id,
+      		t.reverse_flag,
+			f.id mer_id,
+      		f.fix_fee mer_fix_fee,
+      		f.ratio mer_ratio,
+      		fr.id acc_id,
+      		fr.fix_fee acc_fix_fee,
+      		fr.ratio acc_ratio,
+      		mf.fee,
+			sm.merchant_name,
+			t.trans_id,
+			t.order_id,
+			t.trans_status,
+			a.name credit_seq_name,
+			a.account_type b,
+          	a.email credit_seq_email,
+          	a.mobile credit_seq_mobile,
+			ac.name debit_seq_name,
+			ac.account_type d,
+          	ac.email debit_seq_email,
+          	ac.mobile debit_seq_mobile,
+      		t.begin_date,
+         	t.end_date,
+      		t.amount,
+      		t.debit_fee,
+      		t.credit_fee,
+      		at.action_name
+		FROM
+			fee_ratio f,
+     		fee_ratio fr,
+			merchant_fee_detail mf,
+			spread_merchant_info sm,
+			transaction t,
+			account a,
+			account ac,
+			action_type at
+		where t.trans_id = #{id,jdbcType=DECIMAL}
+		and mf.merchant_fee_id = f.id
+    	and mf.account_fee_id = fr.id
+		and t.trans_id = mf.trans_id
+		and t.credit_seq = a.default_sub_seq
+		and t.debit_seq = ac.default_sub_seq
+		and t.action_seq = at.id
+    	and mf.merchant_id = sm.id
+	</select>
+	
+	<select id="getSumMerchantFee" resultType="java.util.Map">
+		select
+		    d.merchant_id,
+		    to_char(t.create_time,'yyyy-mm-dd') trans_date,
+		    sum(t.amount) sum_amount,
+		    count(1) count,
+		    sum(d.fee) sum_fee
+	    from 
+	       (select * from merchant_fee_detail where 1=1
+			<if test="merchantId != null and merchantId !=''">
+				and merchant_id = #{merchantId,jdbcType=DECIMAL}
+			</if>
+	       )d
+		join (select * from transaction where 1=1
+		and create_time >= #{beginDate} and #{endDate} >= create_time
+		and trans_status = 3 and reverse_flag is null
+		<if test="actionSeq != null and actionSeq !=''">
+			and action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		) t
+		on d.trans_id = t.trans_id
+		group by d.merchant_id,to_char(t.create_time,'yyyy-mm-dd')
+		order by d.merchant_id,to_char(t.create_time,'yyyy-mm-dd') desc
+	</select>
+	
+	<!--导出推广商交易查询数据  -->
+	<select id="export" resultType="MerchantFeeDetail">
+		select 
+		       d.merchant_id,
+		       t.trans_id,
+		       t.order_id,
+		       ca.account_type,
+		       ca.name credit_name,
+		       da.name debit_name,
+		       t.action_seq,
+		       t.trans_status,
+		       t.create_time,
+		       t.amount,
+		       t.reverse_flag,
+		       sr.fee_method spread_fee_method,
+		       decode(sr.fee_method,1,sr.fix_fee,2,sr.ratio) spread_fee,
+		       ar.fee_method account_fee_method,
+		       decode(ar.fee_method,1,ar.fix_fee,2,ar.ratio) account_fee,
+		       d.fee,
+		       t.remark
+		 from 
+		        (select * from vnv.merchant_fee_detail where 1=1
+				<if test="merchantId != null and merchantId !=''">
+					and merchant_id = #{merchantId,jdbcType=DECIMAL}
+				</if>
+		        )d
+		join vnv.transaction t
+		on d.trans_id = t.trans_id and t.trans_status = 3 
+		and t.reverse_flag is null
+		and t.create_time >= #{beginDate} and #{endDate} >= t.create_time
+		<if test="transId != null and transId !=''">
+			and t.trans_id = #{transId,jdbcType=VARCHAR}
+		</if>
+		<if test="orderId != null and orderId !=''">
+			and t.order_id = #{orderId,jdbcType=VARCHAR}
+		</if>
+		<if test="actionSeq != null and actionSeq !=''">
+			and t.action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		left join (select * from account where 
+			login_password &lt;&gt; 'test' or pay_password &lt;&gt; 'test' or remark &lt;&gt; 'import'
+			and (account_type = 'B' or account_type = 'C')
+		) ca
+		on t.credit_seq = ca.default_sub_seq
+		left join (select * from account where 
+		login_password &lt;&gt; 'test' or pay_password &lt;&gt; 'test' or remark &lt;&gt; 'import'
+		and (account_type = 'B' or account_type = 'C')
+		) da
+		on t.debit_seq = da.default_sub_seq
+		left join (select * from vnv.fee_ratio where relating_type='4') sr
+		on d.merchant_fee_id = sr.id
+		left join (select * from vnv.fee_ratio where relating_type != '4') ar
+		on d.account_fee_id = ar.id
+	</select>
+	
+	
+	<select id="exportSum" resultType="com.uns.paysys.modules.merc.entity.MerchantFeeDetailSum" >
+		select
+		    d.merchant_id,
+		    to_char(t.create_time,'yyyy-mm-dd') trans_date,
+		    nvl(sum(t.amount),0) sum_amount,
+		    count(1) count,
+		    nvl(sum(d.fee),0) sum_fee
+	    from 
+	       (select * from merchant_fee_detail where 1=1
+			<if test="merchantId != null and merchantId !=''">
+				and merchant_id = #{merchantId,jdbcType=DECIMAL}
+			</if>
+	       )d
+		join (select * from transaction where 1=1
+		and create_time >= #{beginDate} and #{endDate} >= create_time
+		and trans_status = 3 and reverse_flag is null
+		<if test="actionSeq != null and actionSeq !=''">
+			and action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		) t
+		on d.trans_id = t.trans_id
+		group by d.merchant_id,to_char(t.create_time,'yyyy-mm-dd')
+		order by d.merchant_id,to_char(t.create_time,'yyyy-mm-dd') desc
+	</select>
+		
+	
+	<select id="getMerchantFeeSum" resultType="java.lang.Double" parameterType="com.uns.paysys.modules.merc.form.MerchantFeeDetailForm">
+		select nvl(sum(d.fee),0)
+		from merchant_fee_detail d,
+			     (select id,reverse_flag,trans_id from transaction where create_time >= #{beginDate} and #{endDate} >= create_time
+					<if test="actionSeq != null and actionSeq != ''">
+						and action_seq = #{actionSeq,jdbcType=DECIMAL}
+					</if>
+					<if test="transId != null and transId != ''">
+						and trans_id = #{transId,jdbcType=VARCHAR}
+					</if>
+					<if test="orderId != null and orderId != ''">
+						and order_id = #{orderId,jdbcType=VARCHAR}
+					</if>
+			     )t
+		where d.trans_id = t.trans_id
+		and t.reverse_flag is null
+		<if test="merchantId != null and merchantId != ''">
+			and d.merchant_id = #{merchantId,jdbcType=DECIMAL}
+		</if>
+	</select>
+
+	<select id="getMerchantSumFee" resultType="java.lang.Double">
+		select
+		    nvl(sum(d.fee),0) sum_fee
+	   from 
+	      (select * from merchant_fee_detail where 1=1
+		<if test="merchantId != null and merchantId !=''">
+			and merchant_id = #{merchantId,jdbcType=DECIMAL}
+		</if>
+	      )d
+		join (select * from transaction where 1=1
+		and create_time >= #{beginDate} and #{endDate} >= create_time
+		and trans_status = 3 and reverse_flag is null
+		<if test="actionSeq != null and actionSeq !=''">
+			and action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		) t
+		on d.trans_id = t.trans_id
+	 </select>
+</mapper>	

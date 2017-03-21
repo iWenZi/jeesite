@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.sys.dao.AuditGroupMapper">
+  <resultMap id="BaseResultMap" type="com.uns.paysys.modules.sys.entity.AuditGroup">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACCOUNT_ID" jdbcType="DECIMAL" property="accountId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="USED" jdbcType="DECIMAL" property="used" />
+    <result column="VERSION" jdbcType="DECIMAL" property="version" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="DATE" property="updateTime" />
+    <result column="SYSTEM_GROUP" jdbcType="DECIMAL" property="systemGroup" />
+    <result column="UPDATABLE" jdbcType="DECIMAL" property="updatable" />
+    <result column="USERID_LIST" jdbcType="VARCHAR" property="userIdList" />
+  </resultMap>
+
+
+
+  <sql id="Base_Column_List">
+    id, account_id, name, remark, used, version, create_user, create_time, update_user, 
+    update_time, system_group, updatable
+  </sql>
+  
+  <sql id="Ag_Base_Column_List">
+    ag.id, ag.account_id, ag.name, ag.remark, ag.used, ag.version, ag.create_user, ag.create_time, ag.update_user, 
+    ag.update_time, ag.system_group, ag.updatable
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from AUDIT_GROUP
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from AUDIT_GROUP
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insert" parameterType="com.uns.paysys.modules.sys.entity.AuditGroup">
+    insert into AUDIT_GROUP (ID, ACCOUNT_ID, NAME, 
+      REMARK, USED, VERSION, 
+      CREATE_USER, CREATE_TIME, UPDATE_USER, 
+      UPDATE_TIME, SYSTEM_GROUP, UPDATABLE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{accountId,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{used,jdbcType=DECIMAL}, #{version,jdbcType=DECIMAL}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=DATE}, #{systemGroup,jdbcType=DECIMAL}, #{updatable,jdbcType=DECIMAL}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.uns.paysys.modules.sys.entity.AuditGroup">
+    insert into AUDIT_GROUP
+     <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+      	select audit_group_sequence.nextval from dual
+     </selectKey>
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="accountId != null">
+        ACCOUNT_ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="used != null">
+        USED,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="systemGroup != null">
+        SYSTEM_GROUP,
+      </if>
+      <if test="updatable != null">
+        UPDATABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null">
+        #{used,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemGroup != null">
+        #{systemGroup,jdbcType=DECIMAL},
+      </if>
+      <if test="updatable != null">
+        #{updatable,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.sys.entity.AuditGroup">
+    update AUDIT_GROUP
+    <set>
+      <if test="accountId != null">
+        ACCOUNT_ID = #{accountId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null">
+        USED = #{used,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemGroup != null">
+        SYSTEM_GROUP = #{systemGroup,jdbcType=DECIMAL},
+      </if>
+      <if test="updatable != null">
+        UPDATABLE = #{updatable,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.uns.paysys.modules.sys.entity.AuditGroup">
+    update AUDIT_GROUP
+    set ACCOUNT_ID = #{accountId,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      USED = #{used,jdbcType=DECIMAL},
+      VERSION = #{version,jdbcType=DECIMAL},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      SYSTEM_GROUP = #{systemGroup,jdbcType=DECIMAL},
+      UPDATABLE = #{updatable,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <!-- 查询审核组列表 -->
+  <select id="findList"  resultMap="BaseResultMap">
+  	    select 
+    <include refid="Ag_Base_Column_List" />,
+     listagg(agui.user_info_id,',') within group(order by agui.audit_group_id) as userid_list
+    from audit_group ag left join
+    audit_group_user_info agui
+    on ag.id = agui.audit_group_id
+    where ag.system_group = 1
+    and ag.updatable = 1
+    group by <include refid="Ag_Base_Column_List" />
+    order by  ag.id desc, ag.name
+  </select>
+  
+  <!-- 删除审核组审核人员映射表 -->
+  <select id="deleteGroupUser" parameterType="java.lang.Long">
+  	delete from audit_group_user_info where audit_group_id= #{id,jdbcType=DECIMAL}
+  </select>
+  
+  <!-- 保存审核组 审核人员 映射关系 -->
+  <insert id="saveGroupUser" parameterType="com.uns.paysys.modules.sys.entity.AuditGroup">
+		INSERT INTO audit_group_user_info(audit_group_id, user_info_id)
+		<foreach collection="userList" item="userId" separator=" union all ">
+			SELECT #{id}, #{userId} FROM dual
+		</foreach>
+  </insert>
+  
+
+  <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	    select 
+    <include refid="Ag_Base_Column_List" />,
+     listagg(agui.user_info_id,',') within group(order by agui.audit_group_id) as userid_list
+    from audit_group ag left join
+    audit_group_user_info agui
+    on ag.id = agui.audit_group_id
+    where ag.system_group = 1
+    and ag.updatable = 1
+    and ag.ID = #{id,jdbcType=DECIMAL}
+    group by <include refid="Ag_Base_Column_List" />
+    order by  ag.id desc, ag.name
+  </select>
+  
+</mapper>

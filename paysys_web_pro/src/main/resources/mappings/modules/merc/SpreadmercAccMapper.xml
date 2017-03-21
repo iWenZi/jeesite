@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.SpreadmercAccMapper">
+  <resultMap id="BaseResultMap" type="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    <id column="SPREADMERCHANT_ID" jdbcType="DECIMAL" property="spreadmerchantId" />
+    <id column="ACCOUNT_ID" jdbcType="DECIMAL" property="accountId" />
+    <result column="ASSIGN_TIME" jdbcType="DATE" property="assignTime" />
+    <result column="DEFAULT_SUB_SEQ" jdbcType="DECIMAL" property="defaultSubSeq" />
+    <result column="AUDIT_STATUS" jdbcType="VARCHAR" property="auditStatus" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    SPREADMERCHANT_ID, ACCOUNT_ID, ASSIGN_TIME, DEFAULT_SUB_SEQ, AUDIT_STATUS
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SPREADMERC_ACC
+    where SPREADMERCHANT_ID = #{spreadmerchantId,jdbcType=DECIMAL}
+      and ACCOUNT_ID = #{accountId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    delete from SPREADMERC_ACC
+    where SPREADMERCHANT_ID = #{spreadmerchantId,jdbcType=DECIMAL}
+      and ACCOUNT_ID = #{accountId,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insert" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    insert into SPREADMERC_ACC (SPREADMERCHANT_ID, ACCOUNT_ID, ASSIGN_TIME, 
+      DEFAULT_SUB_SEQ, AUDIT_STATUS)
+    values (#{spreadmerchantId,jdbcType=DECIMAL}, #{accountId,jdbcType=DECIMAL}, #{assignTime,jdbcType=      #{defaultSubSeq,jdbcType=DECIMAL}, #{auditStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    insert into SPREADMERC_ACC
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spreadmerchantId != null">
+        SPREADMERCHANT_ID,
+      </if>
+      <if test="accountId != null">
+        ACCOUNT_ID,
+      </if>
+      <if test="assignTime != null">
+        ASSIGN_TIME,
+      </if>
+      <if test="defaultSubSeq != null">
+        DEFAULT_SUB_SEQ,
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spreadmerchantId != null">
+        #{spreadmerchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="accountId != null">
+        #{accountId,jdbcType=DECIMAL},
+      </if>
+      <if test="assignTime != null">
+        #{assignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defaultSubSeq != null">
+        #{defaultSubSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    update SPREADMERC_ACC
+    <set>
+      <if test="assignTime != null">
+        ASSIGN_TIME = #{assignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="defaultSubSeq != null">
+        DEFAULT_SUB_SEQ = #{defaultSubSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SPREADMERCHANT_ID = #{spreadmerchantId,jdbcType=DECIMAL}
+      and ACCOUNT_ID = #{accountId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    update SPREADMERC_ACC
+    set ASSIGN_TIME = #{assignTime,jdbcType=TIMESTAMP},
+      DEFAULT_SUB_SEQ = #{defaultSubSeq,jdbcType=DECIMAL},
+      AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR}
+    where SPREADMERCHANT_ID = #{spreadmerchantId,jdbcType=DECIMAL}
+      and ACCOUNT_ID = #{accountId,jdbcType=DECIMAL}
+  </update>
+  
+  
+  
+  
+  	<delete id="deleteAccount" parameterType="java.math.BigDecimal">
+		delete from SPREADMERC_ACC sa
+		where sa.SPREADMERCHANT_ID=#{smId}
+	</delete>
+	
+	
+	
+	
+	  <update id="updateAuditStatus" parameterType="com.uns.paysys.modules.merc.entity.SpreadmercAcc">
+    update SPREADMERC_ACC
+    <set>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SPREADMERCHANT_ID = #{spreadmerchantId,jdbcType=DECIMAL}
+  </update>
+  
+</mapper>

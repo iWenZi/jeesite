@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.SpreadMerchantDao">
+	
+    <sql id="spreadMerchantColumns">
+    	id,
+		email,
+		merchant_name,
+		licence_no,
+		licence_no_date,
+		organize_no,
+		tax_id,
+		organize_trust_no,
+		organize_trust_no_date,
+		account_licence_no,
+		sales_man,
+		capital_amount,
+		founded_date,
+		legal_repre_name,
+		legal_repre_mobile,
+		legal_repre_id_no,
+		legal_repre_id_date,
+		regi_addr,
+		link_addr,
+		operator,
+		operator_tel,
+		spread_merchant_type,
+		deal_range,
+		del_flag,
+		create_user,
+		create_time,
+		update_user,
+		update_time
+    </sql>
+	
+	<!-- 根据编号获得推广商 -->
+	<select id="get" resultType="SpreadMerchant">
+		SELECT
+			<include refid="spreadMerchantColumns"/>
+			
+		FROM spread_merchant_info a
+		
+		WHERE a.id = #{id}
+	</select>
+	
+	<!-- 根据编号获得推广商 -->
+	<select id="findList" resultType="SpreadMerchant">
+		SELECT
+			*
+		FROM spread_merchant_info
+	</select>
+	
+	<!--查询推广商费率列表 -->
+	<select id="findFeeList"  parameterType="com.uns.paysys.modules.merc.form.SpreadMerchantForm" resultType="java.util.Map">
+		select
+			fee.id,
+			info.merchant_name,
+			fee.action_seq,
+			fee.fee_method,
+			fee.fix_fee,
+			fee.ratio,
+			fee.min_fee,
+			fee.max_fee,
+			to_char(fee.begin_date,'yyyy-MM-dd') begin_date,
+			to_char(fee.end_date,'yyyy-MM-dd') end_date,
+			fee.audit_status
+		from 
+			spread_merchant_info info,
+			fee_ratio fee
+		where fee.relating_type=4
+		and info.id=fee.relating_id
+		<if test="merchantName != null and merchantName !=''">
+			and info.merchant_name like CONCAT(CONCAT('%', #{merchantName,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="actionSeq != null and actionSeq !=''">
+			and fee.action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		<if test="feeMethod != null and feeMethod !=''">
+			and fee.fee_method = #{feeMethod,jdbcType=DECIMAL}
+		</if>
+		<if test="auditStatus != null and auditStatus !=''">
+			and fee.audit_status = #{auditStatus,jdbcType=DECIMAL}
+		</if>
+		order by fee.update_time desc
+	</select>
+	
+	
+	
+	<!--查询推广商费率列表 -->
+	<select id="findHisFeeList"  parameterType="com.uns.paysys.modules.merc.form.SpreadMerchantForm" resultType="java.util.Map">
+		select
+			fee.id,
+			info.merchant_name,
+			fee.action_seq,
+			fee.fee_method,
+			fee.fix_fee,
+			fee.ratio,
+			fee.min_fee,
+			fee.max_fee,
+			to_char(fee.begin_date,'yyyy-MM-dd') begin_date,
+			to_char(fee.end_date,'yyyy-MM-dd') end_date
+		from
+			spread_merchant_info info,
+			fee_ratio_his fee
+		where fee.relating_type=4
+		and info.id=fee.relating_id
+		<if test="merchantName != null and merchantName !=''">
+			and info.merchant_name like CONCAT(CONCAT('%', #{merchantName,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="actionSeq != null and actionSeq !=''">
+			and fee.action_seq = #{actionSeq,jdbcType=DECIMAL}
+		</if>
+		<if test="feeMethod != null and feeMethod !=''">
+			and fee.fee_method = #{feeMethod,jdbcType=DECIMAL}
+		</if>
+		order by fee.update_time desc
+	</select>
+	
+	
+		
+	<select id="getSpreadMerchant" resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant" parameterType="java.lang.String">
+		SELECT
+			<include refid="spreadMerchantColumns"/>
+		FROM spread_merchant_info a
+		<if test="_parameter != null and _parameter !=''">
+			WHERE a.del_flag = 0
+			and a.merchant_status = 1
+			and a.audit_status = 2
+		</if>
+		order by a.update_time desc
+	</select>
+	
+	
+</mapper>

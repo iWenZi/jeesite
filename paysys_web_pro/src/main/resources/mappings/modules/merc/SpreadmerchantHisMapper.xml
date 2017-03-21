@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.SpreadmerchantHisMapper">
+  <resultMap id="BaseResultMap" type="com.uns.paysys.modules.merc.entity.SpreadmerchantHis">
+    <result column="OPERATOR" jdbcType="VARCHAR" property="operator" />
+    <result column="OPERATIONTIME" jdbcType="TIMESTAMP" property="operationtime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="CREATEUSER" jdbcType="VARCHAR" property="createuser" />
+    <result column="SPREAD_MERCHANT_ID" jdbcType="DECIMAL" property="spreadMerchantId" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    OPERATOR, OPERATIONTIME, REMARK, ID, CREATETIME, CREATEUSER, SPREAD_MERCHANT_ID
+  </sql>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SPREADMERCHANT_HIS
+    where spread_merchant_id = #{id,jdbcType=DECIMAL}
+  </select>
+
+
+  <insert id="insert" parameterType="com.uns.paysys.modules.merc.entity.SpreadmerchantHis">
+    insert into SPREADMERCHANT_HIS (OPERATOR, OPERATIONTIME, REMARK, 
+      ID, CREATETIME, CREATEUSER, 
+      SPREAD_MERCHANT_ID)
+    values (#{operator,jdbcType=VARCHAR}, #{operationtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{id,jdbcType=DECIMAL}, #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=VARCHAR}, 
+      #{spreadMerchantId,jdbcType=DECIMAL})
+  </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.SpreadmerchantHis">
+  <selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT vnv.spread_merchant_his_seq.NEXTVAL FROM DUAL
+		</selectKey>
+    insert into SPREADMERCHANT_HIS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="operator != null">
+        OPERATOR,
+      </if>
+      <if test="operationtime != null">
+        OPERATIONTIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="createuser != null">
+        CREATEUSER,
+      </if>
+      <if test="spreadMerchantId != null">
+        SPREAD_MERCHANT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operationtime != null">
+        #{operationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuser != null">
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="spreadMerchantId != null">
+        #{spreadMerchantId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

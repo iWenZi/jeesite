@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.SpreadMerchantInfoDao">
+
+	<sql id="spreadMerchantColumns">
+		m.id,
+		m.email,
+		m.merchant_Name,
+		m.licence_No,
+		m.licence_No_Date,
+		m.organize_No,
+		m.tax_Id,
+		m.organize_Trust_No,
+		m.organize_Trust_No_Date,
+		m.account_Licence_No,
+		m.sales_Man,
+		m.capital_Amount,
+		m.founded_Date,
+		m.legal_Repre_Name,
+		m.legal_Repre_Mobile,
+		m.legal_Repre_Id_No,
+		m.legal_Repre_Id_Date,
+		m.regi_Addr,
+		m.link_Addr,
+		m.operator,
+		m.spread_Merchant_Type,
+		m.deal_Range,
+		m.del_Flag,
+		m.create_Time,
+		m.update_Time,
+		m.merchant_status,
+		m.audit_status,
+        m.operator_tel,
+        m.assign_Status
+	</sql>
+
+
+	<sql id="spreadMerchantBankInfoColumns">
+		b.account_name ,
+		b.account_alias ,
+		b.prov_seq ,
+		b.city_seq,
+		b.bank_seq ,
+		b.spread_merchant_id,
+		b.open_account_bank_name ,
+		b.card_no,
+		b.card_type ,
+		b.id ,
+		b.create_user,
+		b.create_time,
+		b.UPDATE_USER,
+		b.update_time
+	</sql>
+
+
+	<!-- 根据编号获得推广商 -->
+	<select id="get" resultType="SpreadMerchant">
+		SELECT
+		<include refid="spreadMerchantColumns" />
+
+		FROM spread_merchant_info a
+
+		WHERE a.id = #{id}
+	</select>
+
+	<!-- 根据编号获得推广商 -->
+	<select id="findList" resultType="java.util.Map"
+		parameterType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		SELECT
+		<include refid="spreadMerchantColumns" />
+		,b.card_no
+		FROM spread_merchant_info m left join
+		spread_merchant_bank_info b on
+		m.id=b.spread_merchant_id
+		where m.del_Flag=0
+		<if test="email != null and email != ''">
+			AND m.email = #{email}
+		</if>
+
+		<if test="merchantName != null and merchantName != ''">
+			AND m.merchant_Name = #{merchantName}
+		</if>
+
+		<if test="legalRepreMobile != null and legalRepreMobile != ''">
+			AND m.legal_Repre_Mobile = #{legalRepreMobile}
+		</if>
+
+		<if test="auditStatus != null and auditStatus != ''">
+			AND m.audit_status = #{auditStatus}
+		</if>
+
+		<if test="merchantStatus != null and merchantStatus != ''">
+			AND m.merchant_status = #{merchantStatus}
+		</if>
+
+		<if test="createTime != null and createTime !=''">
+			AND to_char(create_Time,'yyyy-MM-dd') >=
+			#{createTime,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null and createTime !=''"> AND #{createTime,jdbcType=VARCHAR}
+			>=
+			to_char(create_Time,'yyyy-MM-dd')
+		</if>
+          order by m.update_time DESC
+	</select>
+
+	<insert id="saveSpreadMerchant">
+	<selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT spread_merchant_info_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO spread_merchant_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="merchantName != null">
+				MERCHANT_NAME,
+			</if>
+			<if test="licenceNo != null">
+				LICENCE_NO,
+			</if>
+			<if test="licenceNoDate != null">
+				LICENCE_NO_DATE,
+			</if>
+			<if test="organizeNo != null">
+				ORGANIZE_NO,
+			</if>
+			<if test="taxId != null">
+				TAX_ID,
+			</if>
+			<if test="organizeTrustNo != null">
+				ORGANIZE_TRUST_NO,
+			</if>
+			<if test="organizeTrustNoDate != null">
+				ORGANIZE_TRUST_NO_DATE,
+			</if>
+			<if test="accountLicenceNo != null">
+				ACCOUNT_LICENCE_NO,
+			</if>
+			<if test="salesMan != null">
+				SALES_MAN,
+			</if>
+			<if test="capitalAmount != null">
+				CAPITAL_AMOUNT,
+			</if>
+			<if test="foundedDate != null">
+				FOUNDED_DATE,
+			</if>
+			<if test="legalRepreName != null">
+				LEGAL_REPRE_NAME,
+			</if>
+			<if test="legalRepreMobile != null">
+				LEGAL_REPRE_MOBILE,
+			</if>
+			<if test="legalRepreIdNo != null">
+				LEGAL_REPRE_ID_NO,
+			</if>
+			<if test="legalRepreIdDate != null">
+				LEGAL_REPRE_ID_DATE,
+			</if>
+			<if test="regiAddr != null">
+				REGI_ADDR,
+			</if>
+			<if test="linkAddr != null">
+				LINK_ADDR,
+			</if>
+			<if test="operator != null">
+				OPERATOR,
+			</if>
+			<if test="spreadMerchantType != null">
+				SPREAD_MERCHANT_TYPE,
+			</if>
+			<if test="dealRange != null">
+				DEAL_RANGE,
+			</if>
+			<if test="merchantStatus != null">
+				MERCHANT_STATUS,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="auditStatus != null">
+				AUDIT_STATUS,
+			</if>
+			<if test="delFlag != null">
+				del_Flag,
+			</if>
+			 <if test="operatorTel != null">
+			 operator_Tel,
+			 </if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="email != null">
+				#{email},
+			</if>
+			<if test="merchantName != null">
+				#{merchantName},
+			</if>
+			<if test="licenceNo != null">
+				#{licenceNo},
+			</if>
+			<if test="licenceNoDate != null">
+				#{licenceNoDate,jdbcType=DATE},
+			</if>
+			<if test="organizeNo != null">
+				#{organizeNo},
+			</if>
+			<if test="taxId != null">
+				#{taxId},
+			</if>
+			<if test="organizeTrustNo != null">
+				#{organizeTrustNo},
+			</if>
+			<if test="organizeTrustNoDate != null">
+				#{organizeTrustNoDate,jdbcType=DATE},
+			</if>
+			<if test="accountLicenceNo != null">
+				#{accountLicenceNo},
+			</if>
+			<if test="salesMan != null">
+				#{salesMan},
+			</if>
+			<if test="capitalAmount != null">
+				#{capitalAmount},
+			</if>
+			<if test="foundedDate != null">
+				#{foundedDate,jdbcType=DATE},
+			</if>
+			<if test="legalRepreName != null">
+				#{legalRepreName},
+			</if>
+			<if test="legalRepreMobile != null">
+				#{legalRepreMobile},
+			</if>
+			<if test="legalRepreIdNo != null">
+				#{legalRepreIdNo},
+			</if>
+			<if test="legalRepreIdDate != null">
+				#{legalRepreIdDate,jdbcType=DATE},
+			</if>
+			<if test="regiAddr != null">
+				#{regiAddr},
+			</if>
+			<if test="linkAddr != null">
+				#{linkAddr},
+			</if>
+			<if test="operator != null">
+				#{operator},
+			</if>
+			<if test="spreadMerchantType != null">
+				#{spreadMerchantType},
+			</if>
+			<if test="dealRange != null">
+				#{dealRange},
+			</if>
+			<if test="merchantStatus != null">
+				#{merchantStatus},
+			</if>
+			<if test="createUser != null">
+				#{createUser},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditStatus != null">
+				#{auditStatus},
+			</if>
+			<if test="delFlag != null">
+				#{delFlag},
+			</if>
+			 <if test="operatorTel != null">
+              #{operatorTel,jdbcType=VARCHAR},
+         </if>
+		</trim>
+
+	</insert>
+
+	<!-- 根据序列获取主键ID -->
+	<select id="getSeq" resultType="Long">
+		select
+		vnv.spread_merchant_info_seq.nextval from dual
+	</select>
+
+
+
+
+	<!-- 查询所有省份 -->
+	<select id="findAllProvince" resultType="com.uns.paysys.modules.merc.entity.CityInfo">
+		select
+		b.city_id,b.city_name,b.sup_city_Id from city_info
+		b where
+		b.city_level=0
+	</select>
+
+
+	<!-- 查询所属省份的城市 -->
+	<select id="provinceAllCity" resultType="com.uns.paysys.modules.merc.entity.CityInfo"
+		parameterType="Long">
+		select
+		b.city_id,b.city_name,b.sup_city_Id from city_info
+		b where
+		b.sup_city_id=#{supcityId}
+	</select>
+
+	<!-- 查询所有银行 -->
+	<select id="findAllBank" resultType="com.uns.paysys.modules.merc.entity.BankInfo">
+		select b.bank_id,b.bank_name
+		from bank_info b
+	</select>
+
+	<insert id="inertBank">
+		<selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT spread_merchant_bank_info_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO spread_merchant_bank_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="accountName != null">
+				account_name,
+			</if>
+			<if test="accountAlias != null">
+				account_alias,
+			</if>
+			<if test="provSeq != null">
+				prov_seq,
+			</if>
+			<if test="citySeq != null">
+				city_seq,
+			</if>
+			<if test="bankSeq != null">
+				bank_seq,
+			</if>
+			<if test="openAccountBankName != null">
+				open_account_bank_name,
+			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
+			<if test="cardType != null">
+				card_type,
+			</if>
+			<if test="createByName != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateByName != null">
+				UPDATE_USER,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="spreadMerchantId != null">
+				spread_merchant_id,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="accountName != null">
+				#{accountName},
+			</if>
+			<if test="accountAlias != null">
+				#{accountAlias},
+			</if>
+			<if test="provSeq != null">
+				#{provSeq},
+			</if>
+			<if test="citySeq != null">
+				#{citySeq},
+			</if>
+			<if test="bankSeq != null">
+				#{bankSeq},
+			</if>
+			<if test="openAccountBankName != null">
+				#{openAccountBankName},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo},
+			</if>
+			<if test="cardType != null">
+				#{cardType},
+			</if>
+			<if test="createByName != null">
+				#{createByName},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateByName != null">
+				#{updateByName},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="spreadMerchantId != null">
+				#{spreadMerchantId},
+			</if>
+		</trim>
+
+	</insert>
+
+
+	<select id="selectByPrimaryKey" parameterType="java.math.BigDecimal"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where ID = #{id,jdbcType=DECIMAL}
+	</select>
+
+
+
+
+	<select id="selectBankByPrimaryKey" parameterType="java.math.BigDecimal"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchantBankInfo">
+		select
+		<include refid="spreadMerchantBankInfoColumns" />
+		from spread_merchant_bank_info b
+		where spread_merchant_id = #{id,jdbcType=DECIMAL}
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		update  spread_merchant_info info set info.del_Flag=1
+		where ID = #{id,jdbcType=DECIMAL}
+	</delete>
+
+
+	<delete id="deleteBankInfo" parameterType="java.math.BigDecimal">
+		delete from spread_merchant_bank_info
+		where spread_merchant_id = #{id,jdbcType=DECIMAL}
+	</delete>
+	
+	
+	
+	  <update id="updateByPrimaryKeySelective"
+	parameterType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+	update SPREAD_MERCHANT_INFO
+    <set>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceNo != null">
+        LICENCE_NO = #{licenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceNoDate != null">
+        LICENCE_NO_DATE = #{licenceNoDate,jdbcType=DATE},
+      </if>
+      <if test="organizeNo != null">
+        ORGANIZE_NO = #{organizeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taxId != null">
+        TAX_ID = #{taxId,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeTrustNo != null">
+        ORGANIZE_TRUST_NO = #{organizeTrustNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizeTrustNoDate != null">
+        ORGANIZE_TRUST_NO_DATE = #{organizeTrustNoDate,jdbcType=DATE},
+      </if>
+      <if test="accountLicenceNo != null">
+        ACCOUNT_LICENCE_NO = #{accountLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesMan != null">
+        SALES_MAN = #{salesMan,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalAmount != null">
+        CAPITAL_AMOUNT = #{capitalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="foundedDate != null">
+        FOUNDED_DATE = #{foundedDate,jdbcType=DATE},
+      </if>
+      <if test="legalRepreName != null">
+        LEGAL_REPRE_NAME = #{legalRepreName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepreMobile != null">
+        LEGAL_REPRE_MOBILE = #{legalRepreMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepreIdNo != null">
+        LEGAL_REPRE_ID_NO = #{legalRepreIdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="legalRepreIdDate != null">
+        LEGAL_REPRE_ID_DATE = #{legalRepreIdDate,jdbcType=DATE},
+      </if>
+      <if test="regiAddr != null">
+        REGI_ADDR = #{regiAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="linkAddr != null">
+        LINK_ADDR = #{linkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        OPERATOR = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorTel != null">
+        OPERATOR_TEL = #{operatorTel,jdbcType=VARCHAR},
+      </if>
+      <if test="spreadMerchantType != null">
+        SPREAD_MERCHANT_TYPE = #{spreadMerchantType,jdbcType=VARCHAR},
+      </if>
+      <if test="dealRange != null">
+        DEAL_RANGE = #{dealRange,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantStatus != null">
+        MERCHANT_STATUS = #{merchantStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_User = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="assignStatus != null">
+        assign_Status = #{assignStatus,jdbcType=VARCHAR},
+      </if>
+      
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+		<select id="getSpreadMerchantByEmail" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.email = #{email,jdbcType=VARCHAR}
+	</select>
+	
+		<select id="getSpreadMerchantByMerchantName" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR}
+	</select>
+	
+	 <select id="getSpreadMerchantByLicenceNo" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.LICENCE_NO = #{licenceNo,jdbcType=VARCHAR}
+	</select>
+	
+		 <select id="getSpreadMerchantByOrganizeNo" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.organize_No = #{organizeNo,jdbcType=VARCHAR}
+	</select>
+
+
+			 <select id="getSpreadMerchantByTaxId" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.TAX_ID = #{taxId,jdbcType=VARCHAR}
+	</select>
+	
+				 <select id="getSpreadMerchantByOrganizeTrustNo" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.ORGANIZE_TRUST_NO = #{organizeTrustNo,jdbcType=VARCHAR}
+	</select>
+	
+				 <select id="getSpreadMerchantByAccountLicenceNo" parameterType="String"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchant">
+		select
+		<include refid="spreadMerchantColumns" />
+		from spread_merchant_info m
+		where m.ACCOUNT_LICENCE_NO = #{accountLicenceNo,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

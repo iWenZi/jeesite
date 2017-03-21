@@ -1,0 +1,83 @@
+/**
+ * BootstrapValidator (http://bootstrapvalidator.com)
+ * The best jQuery plugin to validate form fields. Designed to use with Bootstrap 3
+ *
+ * @author      http://twitter.com/nghuuphuoc
+ * @copyright   (c) 2013 - 2014 Nguyen Huu Phuoc
+ * @license     MIT
+ */
+
+.bv-form .help-block {
+    margin-bottom: 0;
+}
+.bv-form .tooltip-inner {
+    text-align: left;
+}
+.nav-tabs li.bv-tab-success > a {
+    color: #3c763d;
+}
+.nav-tabs li.bv-tab-error > a {
+    color: #a94442;
+}
+
+/*
+ysbformvalidate
+*/
+
+
+    .form-horizontal .has-feedback .form-control-feedback{
+        background: url(../img/A2.png) no-repeat 4px 9px;
+        width: 28px;
+    }
+    
+    .biaodan .has-error .help-block,
+    .biaodan .has-error .radio,
+    .biaodan .has-error .checkbox,
+    .biaodan .has-error .radio-inline,
+    .biaodan .has-error .checkbox-inline {
+        color: #FF8700;
+        margin-top: 10px;
+    }
+    .glyphicon-remove:before {
+        content: ""!important;
+    }
+    .form-horizontal .control-label,
+    .form-horizontal .radio,
+    .form-horizontal .checkbox,
+    .form-horizontal .radio-inline,
+    .form-horizontal .checkbox-inline {
+        padding-top: 3px;
+    }
+    .form-group input,
+    .form-group select {
+        float: left;
+    }
+    .has-feedback .form-control-feedback {
+        position: relative;
+        float: left;
+    }
+    .has-feedback .form-control-feedback .errorholder small {
+        float: left;
+        display: inline-block;
+        word-break: keep-all;
+    }
+    .has-feedback .errorholder .form-control-feedback {
+        left: 0;
+        top: 0;
+    }
+    .has-feedback.has-error .errorholder {
+        display: block;
+        float: left;
+        width: 284px;
+        margin-left: 20px;
+        background-color: #F5F5F5;
+        height: 44px;
+        line-height: 44px;
+    }
+    .has-feedback.has-error .errorholder small {
+        margin: 0;
+    }
+    .has-feedback.has-success .errorholder {
+        display: none;
+    }
+

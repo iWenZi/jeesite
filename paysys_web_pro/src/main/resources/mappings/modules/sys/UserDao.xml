@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.sys.dao.UserDao">
+
+	<!-- <resultMap id="BaseResultMap" type="com.uns.paysys.modules.sys.entity.User">
+	  <id column="ID" jdbcType="DECIMAL" property="id" />
+	  <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+	  <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+	  <result column="NO" jdbcType="VARCHAR" property="no" />
+	  <result column="NAME" jdbcType="VARCHAR" property="name" />
+	  <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+	  <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+	  <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+	  <result column="USER_TYPE" jdbcType="CHAR" property="userType" />
+	  <result column="PHOTO" jdbcType="VARCHAR" property="photo" />
+	  <result column="LOGIN_IP" jdbcType="VARCHAR" property="loginIp" />
+	  <result column="LOGIN_DATE" jdbcType="DATE" property="loginDate" />
+	  <result column="LOGIN_FLAG" jdbcType="VARCHAR" property="loginFlag" />
+	  <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.id" />
+	  <result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+	  <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.id" />
+	  <result column="UPDATE_DATE" jdbcType="DATE" property="updateDate" />
+	  <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+	  <result column="DEL_FLAG" jdbcType="CHAR" property="delFlag" />
+	</resultMap>
+	
+	 <sql id="Base_Column_List">
+		  ID, LOGIN_NAME, PASSWORD, NO, NAME, EMAIL, PHONE, MOBILE, USER_TYPE, PHOTO, LOGIN_IP, 
+		  LOGIN_DATE, LOGIN_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, REMARKS, 
+		  DEL_FLAG
+	 </sql> -->
+	 
+	 <sql id="userJoins">
+	 </sql>
+	 
+	 <sql id="userColumns">
+    	a.id,
+    	a.login_name,
+    	a.password,
+    	a.no,
+		a.name,
+		a.email,
+		a.phone,
+		a.mobile,
+		a.user_type,
+		a.login_ip,
+		a.login_date,
+		a.remarks,
+		a.login_flag,
+		a.photo,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag,
+		a.leave_info,
+		a.pwd_err_times,
+		a.update_pwd_time
+    </sql>
+	 
+	 
+	 
+  <!-- <insert id="insertSelective" parameterType="com.uns.paysys.modules.sys.entity.User">
+  	 <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+      	select sys_user_seq.nextval from dual
+     </selectKey>
+    insert into SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="loginName != null">
+        LOGIN_NAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="no != null">
+        NO,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="photo != null">
+        PHOTO,
+      </if>
+      <if test="loginIp != null">
+        LOGIN_IP,
+      </if>
+      <if test="loginDate != null">
+        LOGIN_DATE,
+      </if>
+      <if test="loginFlag != null">
+        LOGIN_FLAG,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=CHAR},
+      </if>
+      <if test="photo != null">
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null">
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null">
+        #{loginDate,jdbcType=DATE},
+      </if>
+      <if test="loginFlag != null">
+        #{loginFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.sys.entity.User">
+    update SYS_USER
+    <set>
+      <if test="loginName != null">
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        NO = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=CHAR},
+      </if>
+      <if test="photo != null">
+        PHOTO = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null">
+        LOGIN_IP = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null">
+        LOGIN_DATE = #{loginDate,jdbcType=DATE},
+      </if>
+      <if test="loginFlag != null">
+        LOGIN_FLAG = #{loginFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update> -->
+	
+	
+	<!-- 根据编号获得用户 -->
+	<select id="get" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM sys_user a
+		<include refid="userJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<!-- 根据登录名查询用户 -->
+	<select id="getByLoginName" resultType="User" parameterType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM sys_user a
+		<include refid="userJoins"/>
+		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+	<!-- 分页查询用户信息 -->
+	<select id="findList" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM sys_user a
+		<include refid="userJoins"/>
+		<if test="role != null and role.id != null and role.id != ''">
+			JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
+		</if>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<!-- 如果不是超级管理员，则不显示超级管理员用户 -->
+		<if test="!currentUser.admin">
+			AND a.id != '1'
+		</if>
+		<if test="loginName != null and loginName != ''">
+			AND a.login_name like CONCAT(CONCAT('%', #{loginName}), '%')
+		</if>
+		<if test="name != null and name != ''">
+			AND a.name like CONCAT(CONCAT('%', #{name}), '%')
+		</if>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.name
+			</otherwise>
+		</choose>
+	</select>
+	
+	<!-- 查询全部用户 -->
+	<select id="findAllList" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM sys_user a
+		<include refid="userJoins"/>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		ORDER BY a.name
+	</select>
+	
+	<!-- 查询全部用户数目 -->
+	<select id="findAllCount" resultType="long">
+		SELECT
+			COUNT(1)
+		FROM sys_user a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+	
+	<!-- 插入用户 -->
+	<insert id="insert">
+		INSERT INTO sys_user(
+			id,  
+			login_name, 
+			password, 
+			no, 
+			name, 
+			email, 
+			phone, 
+			mobile, 
+			user_type, 
+			create_by, 
+			create_date, 
+			update_by, 
+			update_date, 
+			remarks, 
+			login_flag, 
+			photo, 
+			del_flag,
+			leave_info
+		) VALUES (
+			#{id}, 
+			#{loginName}, 
+			#{password}, 
+			#{no}, 
+			#{name}, 
+			#{email}, 
+			#{phone}, 
+			#{mobile}, 
+			#{userType}, 
+			#{createBy.id}, 
+			#{createDate}, 
+			#{updateBy.id}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{loginFlag}, 
+			#{photo}, 
+			#{delFlag},
+			#{leaveInfo}
+		)
+	</insert>
+	
+	<!-- 更新用户 -->
+	<update id="update">
+		UPDATE sys_user SET 
+			login_name = #{loginName}, 
+			password = #{password}, 
+			no = #{no}, 
+			name = #{name}, 
+			email = #{email}, 
+			phone = #{phone}, 
+			mobile = #{mobile}, 
+			user_type = #{userType}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks},
+			login_flag = #{loginFlag},
+			photo = #{photo},
+			leave_info = #{leaveInfo},
+			pwd_err_times = #{pwdErrTimes},
+			update_pwd_time = #{updatePwdTime}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 删除用户和角色关联表数据 -->
+	<delete id="deleteUserRole">
+		DELETE FROM sys_user_role WHERE user_id = #{id}
+	</delete>
+	
+	<!-- 插入用户和角色关联表数据 -->
+	<insert id="insertUserRole">
+		INSERT INTO sys_user_role(user_id, role_id)
+		<foreach collection="roleList" item="role" separator=" union all ">
+			SELECT #{id}, #{role.id} FROM dual
+		</foreach>
+	</insert>
+	
+	<!-- 更新用户信息  -->
+	<update id="updateUserInfo">
+		UPDATE sys_user SET 
+			email = #{email}, 
+			phone = #{phone}, 
+			mobile = #{mobile}, 
+			update_by = #{updateBy.id}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks},
+			photo = #{photo},
+			leave_info = #{leaveInfo},
+			pwd_err_times = #{pwdErrTimes},
+			update_pwd_time = #{updatePwdTime},
+			login_flag = #{loginFlag}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 更新用户密码 -->
+	<update id="updatePasswordById">
+		UPDATE sys_user SET 
+			password = #{password},
+			update_pwd_time = sysdate
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 更新登录信息，如登录IP、登录时间 -->
+	<update id="updateLoginInfo">
+		UPDATE sys_user SET 
+			login_ip = #{loginIp}, 
+			login_Date = #{loginDate} 
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 逻辑删除用户 -->
+	<update id="delete">
+		UPDATE sys_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+		<!-- 根据序列获取主键ID -->
+	<select id="getSeq" resultType="Long">
+		select vnv.sys_user_seq.nextval from dual
+	</select>
+	
+	<select id="getUserList" parameterType="java.lang.String" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM sys_user a
+		WHERE 1=1
+		<if test="_parameter != null and _parameter != ''">
+			and del_flag = 0
+		</if>
+	</select>
+
+	
+</mapper>

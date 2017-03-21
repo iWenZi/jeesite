@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.AssignDao">
+
+	<sql id="spreadMerchantColumns">
+		m.id,
+		m.email,
+		m.merchant_Name,
+		m.licence_No,
+		m.licence_No_Date,
+		m.organize_No,
+		m.tax_Id,
+		m.organize_Trust_No,
+		m.organize_Trust_No_Date,
+		m.account_Licence_No,
+		m.sales_Man,
+		m.capital_Amount,
+		m.founded_Date,
+		m.legal_Repre_Name,
+		m.legal_Repre_Mobile,
+		m.legal_Repre_Id_No,
+		m.legal_Repre_Id_Date,
+		m.regi_Addr,
+		m.link_Addr,
+		m.operator,
+		m.spread_Merchant_Type,
+		m.deal_Range,
+		m.del_Flag,
+		m.create_Time,
+		m.update_Time,
+		m.merchant_status,
+		m.audit_status
+
+	</sql>
+
+	
+	<!--查询推广商商户分配列表 -->
+	<select id="findAssignList" parameterType="com.uns.paysys.modules.merc.form.AssignForm"
+		resultType="java.util.Map">
+		select
+		info.id,
+		info.email,
+		info.merchant_Name,
+		info.sales_Man,
+		info.merchant_status,
+		info.create_Time,
+		info.assign_status
+		from
+		spread_merchant_info info
+		where info.audit_status=2
+		and info.del_Flag=0
+		<if test="merchantName != null and merchantName !=''">
+			and info.merchant_name like CONCAT(CONCAT('%',
+			#{merchantName,jdbcType=VARCHAR}), '%')
+		</if>
+		<if test="email != null and email !=''">
+			and info.email = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="merchantStatus != null and merchantStatus !=''">
+			and info.merchant_status = #{merchantStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null and createTime !=''">
+			AND to_char(create_Time,'yyyy-MM-dd') >=
+			#{createTime,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime != null and createTime !=''"> AND #{createTime,jdbcType=VARCHAR}
+			>=
+			to_char(create_Time,'yyyy-MM-dd')
+		</if>
+		 order by update_time DESC
+	</select>
+	
+</mapper>

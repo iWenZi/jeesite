@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.AccountDataMapper">
+	<resultMap id="BaseResultMap"
+		type="com.uns.paysys.modules.merc.entity.AccountData">
+		<id column="ID" jdbcType="DECIMAL" property="id" />
+		<result column="ACCOUNT_SEQ" jdbcType="DECIMAL" property="accountSeq" />
+		<result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+		<result column="DATA_FLAG" jdbcType="VARCHAR" property="dataFlag" />
+		<result column="APPCODE" jdbcType="VARCHAR" property="appcode" />
+		<result column="FILEKEY" jdbcType="VARCHAR" property="filekey" />
+		<result column="RET" jdbcType="VARCHAR" property="ret" />
+		<result column="CREATE_DATE" jdbcType="DATE" property="createDate" />
+		<result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+		<result column="UPDATE_DATE" jdbcType="DATE" property="updateDate" />
+		<result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+		<result column="FILE_TYPE" jdbcType="VARCHAR" property="fileType" />
+	</resultMap>
+
+
+	<sql id="Base_Column_List">
+		ID, ACCOUNT_SEQ, FILE_NAME, DATA_FLAG, APPCODE, FILEKEY,
+		RET,
+		CREATE_DATE, CREATE_USER,
+		UPDATE_DATE, UPDATE_USER, FILE_TYPE
+	</sql>
+
+	<select id="selectBySmSeq" parameterType="java.math.BigDecimal"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ACCOUNT_DATA
+		where DATA_FLAG='1' AND account_seq = #{id,jdbcType=DECIMAL}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+		delete from
+		ACCOUNT_DATA
+		where ID = #{id,jdbcType=DECIMAL}
+	</delete>
+
+	<insert id="insert" parameterType="com.uns.paysys.modules.merc.entity.AccountData">
+		insert into ACCOUNT_DATA (ID,
+		ACCOUNT_SEQ, FILE_NAME,
+		DATA_FLAG, APPCODE, FILEKEY,
+		RET, CREATE_DATE,
+		CREATE_USER,
+		UPDATE_DATE, UPDATE_USER, FILE_TYPE
+		)
+		values
+		(#{id,jdbcType=DECIMAL}, #{accountSeq,jdbcType=DECIMAL},
+		#{fileName,jdbcType=VARCHAR},
+		#{dataFlag,jdbcType=VARCHAR},
+		#{appcode,jdbcType=VARCHAR}, #{filekey,jdbcType=VARCHAR},
+		#{ret,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE},
+		#{createUser,jdbcType=VARCHAR},
+		#{updateDate,jdbcType=DATE},
+		#{updateUser,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.AccountData">
+
+		<selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT vnv.account_data_seq.NEXTVAL FROM DUAL
+		</selectKey>
+
+		insert into ACCOUNT_DATA
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="accountSeq != null">
+				ACCOUNT_SEQ,
+			</if>
+			<if test="fileName != null">
+				FILE_NAME,
+			</if>
+			<if test="dataFlag != null">
+				DATA_FLAG,
+			</if>
+			<if test="appcode != null">
+				APPCODE,
+			</if>
+			<if test="filekey != null">
+				FILEKEY,
+			</if>
+			<if test="ret != null">
+				RET,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="createUser != null">
+				CREATE_USER,
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE,
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER,
+			</if>
+			<if test="fileType != null">
+				FILE_TYPE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="accountSeq != null">
+				#{accountSeq,jdbcType=DECIMAL},
+			</if>
+			<if test="fileName != null">
+				#{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="dataFlag != null">
+				#{dataFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="appcode != null">
+				#{appcode,jdbcType=VARCHAR},
+			</if>
+			<if test="filekey != null">
+				#{filekey,jdbcType=VARCHAR},
+			</if>
+			<if test="ret != null">
+				#{ret,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=DATE},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=DATE},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="fileType != null">
+				#{fileType,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.merc.entity.AccountData">
+		update ACCOUNT_DATA
+		<set>
+			<if test="accountSeq != null">
+				ACCOUNT_SEQ = #{accountSeq,jdbcType=DECIMAL},
+			</if>
+			<if test="fileName != null">
+				FILE_NAME = #{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="dataFlag != null">
+				DATA_FLAG = #{dataFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="appcode != null">
+				APPCODE = #{appcode,jdbcType=VARCHAR},
+			</if>
+			<if test="filekey != null">
+				FILEKEY = #{filekey,jdbcType=VARCHAR},
+			</if>
+			<if test="ret != null">
+				RET = #{ret,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=DATE},
+			</if>
+			<if test="createUser != null">
+				CREATE_USER = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE = #{updateDate,jdbcType=DATE},
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="fileType != null">
+				FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.AccountData">
+		update
+		ACCOUNT_DATA
+		set ACCOUNT_SEQ = #{accountSeq,jdbcType=DECIMAL},
+		FILE_NAME = #{fileName,jdbcType=VARCHAR},
+		DATA_FLAG =
+		#{dataFlag,jdbcType=VARCHAR},
+		APPCODE = #{appcode,jdbcType=VARCHAR},
+		FILEKEY = #{filekey,jdbcType=VARCHAR},
+		RET = #{ret,jdbcType=VARCHAR},
+		CREATE_DATE = #{createDate,jdbcType=DATE},
+		CREATE_USER =
+		#{createUser,jdbcType=VARCHAR},
+		UPDATE_DATE =
+		#{updateDate,jdbcType=DATE},
+		UPDATE_USER =
+		#{updateUser,jdbcType=VARCHAR},
+		FILE_TYPE =
+		#{fileType,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+
+	<update id="updateFileState" parameterType="java.lang.String">
+		update ACCOUNT_DATA
+		set
+		DATA_FLAG ='0'
+		where FILEKEY = #{filekey,jdbcType=VARCHAR}
+	</update>
+
+
+</mapper>

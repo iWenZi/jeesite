@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.uns.paysys</groupId>
+    <artifactId>paysys_web</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>paysys_web_pro</artifactId>
+  <packaging>war</packaging>
+  
+  
+  <properties>
+		<bootpath>
+			${java.home}\lib\rt.jar;${java.home}\lib\jce.jar
+		</bootpath>
+		<jdk.version>1.7</jdk.version>
+	</properties>
+	<build>
+	<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<!-- <include>**/*.properties</include> -->
+					<include>**/*.xml</include>
+					<!-- <include>**/*.jpg</include> -->
+				</includes>
+				<!-- 是否替换资源中的属性 -->
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.vm</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+
+		</resources>
+		<plugins>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArguments>
+						<!-- 是否输出所有的编译信息（包括类的加载等） -->
+						<!--<verbose /> -->
+						<!-- 解决maven命令编译报错，因为rt.jar 和jce.jar在jre的lib下面，不在jdk的lib下面， 导致maven找不到（java7以后会出现这个问题），将这2个jar包拷贝到jdk的lib下面估计也好使 -->
+						<bootclasspath>${bootpath}</bootclasspath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			
+			<!-- war 打包插件, 设定war包名称不带版本号 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<packagingExcludes>
+						<!-- WEB-INF/classes/com/thinkgem/jeesite/** -->
+						WEB-INF/classes/org/apache/ibatis/**,
+						WEB-INF/classes/org/mybatis/spring/**
+					</packagingExcludes>
+					<warSourceExcludes>
+						static/bootstrap/2.3.1/docs/**,
+						static/ckeditor/_samples/**,
+						static/ckeditor/_source/**,
+						static/ckfinder/_samples/**,
+						static/ckfinder/help/**,
+						static/compressor*/**,
+						static/jquery-jbox/2.3/docs/**,
+						static/jquery-jbox/2.3/Skins2/**,
+						static/jquery-validation/1.11.0/demo/**,
+						static/jquery-ztree/3.5.12/demo/**,
+						static/My97DatePicker/docs/**,
+						static/supcan/doc/**,
+						static/SuperSlide/demo/**,
+						static/treeTable/demo/**<!-- , -->
+						<!-- userfiles/** --><!-- ,/**/*.jsp -->
+						,
+						test/**
+					</warSourceExcludes>
+					<webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory><!-- 
+						<webXml>${project.basedir}/target/jspweb.xml</webXml> -->
+					<warName>${project.artifactId}</warName>
+				</configuration>
+			</plugin>
+			
+						<!-- Compiler 插件, 设定JDK版本 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  
+  
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+	</dependencies>
+</project>

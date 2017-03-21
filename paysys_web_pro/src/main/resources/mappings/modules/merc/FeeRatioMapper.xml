@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.FeeRatioMapper">
+
+  <resultMap id="BaseResultMap" type="com.uns.paysys.modules.merc.entity.FeeRatio">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACTION_SEQ" jdbcType="DECIMAL" property="actionSeq" />
+    <result column="RELATING_TYPE" jdbcType="VARCHAR" property="relatingType" />
+    <result column="RELATING_ID" jdbcType="VARCHAR" property="relatingId" />
+    <result column="FIN_VERSION" jdbcType="VARCHAR" property="finVersion" />
+    <result column="SUB_TYPE" jdbcType="VARCHAR" property="subType" />
+    <result column="FIX_FEE" jdbcType="DECIMAL" property="fixFee" />
+    <result column="RATIO" jdbcType="DECIMAL" property="ratio" />
+    <result column="MIN_FEE" jdbcType="DECIMAL" property="minFee" />
+    <result column="MAX_FEE" jdbcType="DECIMAL" property="maxFee" />
+    <result column="FLAG" jdbcType="VARCHAR" property="flag" />
+    <result column="BEGIN_DATE" jdbcType="DATE" property="beginDate" />
+    <result column="END_DATE" jdbcType="DATE" property="endDate" />
+    <result column="FEE_METHOD" jdbcType="VARCHAR" property="feeMethod" />
+    <result column="VERSION" jdbcType="DECIMAL" property="version" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="STAIRS_SEQ" jdbcType="DECIMAL" property="stairsSeq" />
+    <result column="AUDIT_STATUS" jdbcType="VARCHAR" property="auditStatus" />
+  </resultMap>
+
+
+
+  <sql id="Base_Column_List">
+    ID, ACTION_SEQ, RELATING_TYPE, RELATING_ID, FIN_VERSION, SUB_TYPE, FIX_FEE, RATIO, 
+    MIN_FEE, MAX_FEE, FLAG, BEGIN_DATE, END_DATE, FEE_METHOD, VERSION, CREATE_USER, CREATE_TIME, 
+    UPDATE_USER, UPDATE_TIME, STAIRS_SEQ, AUDIT_STATUS
+  </sql>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FEE_RATIO
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from FEE_RATIO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.uns.paysys.modules.merc.entity.FeeRatio">
+    insert into FEE_RATIO (ID, ACTION_SEQ, RELATING_TYPE, 
+      RELATING_ID, FIN_VERSION, SUB_TYPE, 
+      FIX_FEE, RATIO, MIN_FEE, 
+      MAX_FEE, FLAG, BEGIN_DATE, 
+      END_DATE, FEE_METHOD, VERSION, 
+      CREATE_USER, CREATE_TIME, UPDATE_USER, 
+      UPDATE_TIME, STAIRS_SEQ, AUDIT_STATUS)
+    values (#{id,jdbcType=DECIMAL}, #{actionSeq,jdbcType=DECIMAL}, #{relatingType,jdbcType=VARCHAR}, 
+      #{relatingId,jdbcType=VARCHAR}, #{finVersion,jdbcType=VARCHAR}, #{subType,jdbcType=VARCHAR}, 
+      #{fixFee,jdbcType=DECIMAL}, #{ratio,jdbcType=DECIMAL}, #{minFee,jdbcType=DECIMAL}, 
+      #{maxFee,jdbcType=DECIMAL}, #{flag,jdbcType=VARCHAR}, #{beginDate,jdbcType=DATE}, 
+      #{endDate,jdbcType=DATE}, #{feeMethod,jdbcType=VARCHAR}, #{version,jdbcType=DECIMAL}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{stairsSeq,jdbcType=DECIMAL}, #{auditStatus,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.FeeRatio">
+    insert into FEE_RATIO
+     <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+      	select fee_ratio_sequence.nextval from dual
+     </selectKey>
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="actionSeq != null">
+        ACTION_SEQ,
+      </if>
+      <if test="relatingType != null">
+        RELATING_TYPE,
+      </if>
+      <if test="relatingId != null">
+        RELATING_ID,
+      </if>
+      <if test="finVersion != null">
+        FIN_VERSION,
+      </if>
+      <if test="subType != null">
+        SUB_TYPE,
+      </if>
+      <if test="fixFee != null">
+        FIX_FEE,
+      </if>
+      <if test="ratio != null">
+        RATIO,
+      </if>
+      <if test="minFee != null">
+        MIN_FEE,
+      </if>
+      <if test="maxFee != null">
+        MAX_FEE,
+      </if>
+      <if test="flag != null">
+        FLAG,
+      </if>
+      <if test="beginDate != null">
+        BEGIN_DATE,
+      </if>
+      <if test="endDate != null">
+        END_DATE,
+      </if>
+      <if test="feeMethod != null">
+        FEE_METHOD,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="stairsSeq != null">
+        STAIRS_SEQ,
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="actionSeq != null">
+        #{actionSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="relatingType != null">
+        #{relatingType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatingId != null">
+        #{relatingId,jdbcType=VARCHAR},
+      </if>
+      <if test="finVersion != null">
+        #{finVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null">
+        #{subType,jdbcType=VARCHAR},
+      </if>
+      <if test="fixFee != null">
+        #{fixFee,jdbcType=DECIMAL},
+      </if>
+      <if test="ratio != null">
+        #{ratio,jdbcType=DECIMAL},
+      </if>
+      <if test="minFee != null">
+        #{minFee,jdbcType=DECIMAL},
+      </if>
+      <if test="maxFee != null">
+        #{maxFee,jdbcType=DECIMAL},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="feeMethod != null">
+        #{feeMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stairsSeq != null">
+        #{stairsSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="auditStatus != null">
+        #{auditStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.merc.entity.FeeRatio">
+    update FEE_RATIO
+    <set>
+      <if test="actionSeq != null">
+        ACTION_SEQ = #{actionSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="relatingType != null">
+        RELATING_TYPE = #{relatingType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatingId != null">
+        RELATING_ID = #{relatingId,jdbcType=VARCHAR},
+      </if>
+      <if test="finVersion != null">
+        FIN_VERSION = #{finVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="subType != null">
+        SUB_TYPE = #{subType,jdbcType=VARCHAR},
+      </if>
+      <if test="fixFee != null">
+        FIX_FEE = #{fixFee,jdbcType=DECIMAL},
+      </if>
+      <if test="ratio != null">
+        RATIO = #{ratio,jdbcType=DECIMAL},
+      </if>
+      <if test="minFee != null">
+        MIN_FEE = #{minFee,jdbcType=DECIMAL},
+      </if>
+      <if test="maxFee != null">
+        MAX_FEE = #{maxFee,jdbcType=DECIMAL},
+      </if>
+      <if test="flag != null">
+        FLAG = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        BEGIN_DATE = #{beginDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        END_DATE = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="feeMethod != null">
+        FEE_METHOD = #{feeMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stairsSeq != null">
+        STAIRS_SEQ = #{stairsSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="auditStatus != null">
+        AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.FeeRatio">
+    update FEE_RATIO
+    set ACTION_SEQ = #{actionSeq,jdbcType=DECIMAL},
+      RELATING_TYPE = #{relatingType,jdbcType=VARCHAR},
+      RELATING_ID = #{relatingId,jdbcType=VARCHAR},
+      FIN_VERSION = #{finVersion,jdbcType=VARCHAR},
+      SUB_TYPE = #{subType,jdbcType=VARCHAR},
+      FIX_FEE = #{fixFee,jdbcType=DECIMAL},
+      RATIO = #{ratio,jdbcType=DECIMAL},
+      MIN_FEE = #{minFee,jdbcType=DECIMAL},
+      MAX_FEE = #{maxFee,jdbcType=DECIMAL},
+      FLAG = #{flag,jdbcType=VARCHAR},
+      BEGIN_DATE = #{beginDate,jdbcType=DATE},
+      END_DATE = #{endDate,jdbcType=DATE},
+      FEE_METHOD = #{feeMethod,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=DECIMAL},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      STAIRS_SEQ = #{stairsSeq,jdbcType=DECIMAL},
+      AUDIT_STATUS = #{auditStatus,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <!-- 是否设置相同费率 -->
+	<select id="isSetSameFee" resultType="com.uns.paysys.modules.merc.entity.FeeRatio" parameterType="com.uns.paysys.modules.merc.entity.FeeRatio">
+		select
+			<include refid="Base_Column_List" />
+		from fee_ratio fee
+		where fee.relating_type = #{relatingType,jdbcType=VARCHAR}
+		and fee.relating_id = #{relatingId,jdbcType=VARCHAR}
+		and fee.action_seq = #{actionSeq,jdbcType=DECIMAL}
+		and fee.audit_status in (0,1,2)
+	</select>
+	
+	
+</mapper>

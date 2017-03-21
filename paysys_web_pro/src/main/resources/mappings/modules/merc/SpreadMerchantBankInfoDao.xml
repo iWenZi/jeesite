@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.SpreadMerchantBankInfoDao">
+
+
+
+	<sql id="spreadMerchantBankInfoColumns">
+		b.account_name ,
+		b.account_alias ,
+		b.prov_seq ,
+		b.city_seq,
+		b.bank_seq ,
+		b.spread_merchant_id,
+		b.open_account_bank_name ,
+		b.card_no,
+		b.card_type ,
+		b.id ,
+		b.CREATE_USER,
+		b.create_time,
+		b.UPDATE_USER,
+		b.update_time
+
+	</sql>
+
+
+	
+
+	<insert id="inertBank">
+		<selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT spread_merchant_bank_info_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO spread_merchant_bank_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="accountName != null">
+				account_name,
+			</if>
+			<if test="accountAlias != null">
+				account_alias,
+			</if>
+			<if test="provSeq != null">
+				prov_seq,
+			</if>
+			<if test="citySeq != null">
+				city_seq,
+			</if>
+			<if test="bankSeq != null">
+				bank_seq,
+			</if>
+			<if test="openAccountBankName != null">
+				open_account_bank_name,
+			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
+			<if test="cardType != null">
+				card_type,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="spreadMerchantId != null">
+				spread_merchant_id,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="accountName != null">
+				#{accountName},
+			</if>
+			<if test="accountAlias != null">
+				#{accountAlias},
+			</if>
+			<if test="provSeq != null">
+				#{provSeq},
+			</if>
+			<if test="citySeq != null">
+				#{citySeq},
+			</if>
+			<if test="bankSeq != null">
+				#{bankSeq},
+			</if>
+			<if test="openAccountBankName != null">
+				#{openAccountBankName},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo},
+			</if>
+			<if test="cardType != null">
+				#{cardType},
+			</if>
+			<if test="createUser != null">
+				#{createUser},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="spreadMerchantId != null">
+				#{spreadMerchantId},
+			</if>
+		</trim>
+
+	</insert>
+
+
+
+	<select id="selectBankByPrimaryKey" parameterType="java.math.BigDecimal"
+		resultType="com.uns.paysys.modules.merc.entity.SpreadMerchantBankInfo">
+		select
+		<include refid="spreadMerchantBankInfoColumns" />
+		from spread_merchant_bank_info b
+		where spread_merchant_id = #{id,jdbcType=DECIMAL}
+	</select>
+
+
+	<delete id="deleteBankInfo" parameterType="java.math.BigDecimal">
+		delete from spread_merchant_bank_info
+		where spread_merchant_id = #{id,jdbcType=DECIMAL}
+	</delete>
+	
+	
+	  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.merc.entity.SpreadMerchantBankInfo">
+    update SPREAD_MERCHANT_BANK_INFO
+    <set>
+      <if test="accountName != null">
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAlias != null">
+        ACCOUNT_ALIAS = #{accountAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="provSeq != null">
+        PROV_SEQ = #{provSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="citySeq != null">
+        CITY_SEQ = #{citySeq,jdbcType=DECIMAL},
+      </if>
+      <if test="bankSeq != null">
+        BANK_SEQ = #{bankSeq,jdbcType=DECIMAL},
+      </if>
+      <if test="openAccountBankName != null">
+        OPEN_ACCOUNT_BANK_NAME = #{openAccountBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null">
+        CARD_TYPE = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SPREAD_MERCHANT_ID = #{spreadMerchantId,jdbcType=DECIMAL}
+  </update>
+
+</mapper>

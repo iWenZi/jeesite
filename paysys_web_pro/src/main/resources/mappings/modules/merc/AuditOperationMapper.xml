@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.AuditOperationMapper">
+  <resultMap id="BaseResultMap" type="com.uns.paysys.modules.merc.entity.AuditOperation">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AUDIT_OPERAND_ID" jdbcType="DECIMAL" property="auditOperandId" />
+    <result column="AUDIT_RULE_ID" jdbcType="DECIMAL" property="auditRuleId" />
+    <result column="AUDIT_GROUP_ID" jdbcType="DECIMAL" property="auditGroupId" />
+    <result column="PREVIOUS_STATUS" jdbcType="DECIMAL" property="previousStatus" />
+    <result column="POST_STATUS" jdbcType="DECIMAL" property="postStatus" />
+    <result column="ATTITUDE" jdbcType="VARCHAR" property="attitude" />
+    <result column="VERSION" jdbcType="DECIMAL" property="version" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, AUDIT_OPERAND_ID, AUDIT_RULE_ID, AUDIT_GROUP_ID, PREVIOUS_STATUS, POST_STATUS, 
+    ATTITUDE, VERSION, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from AUDIT_OPERATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from AUDIT_OPERATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  
+
+  <insert id="insert" parameterType="com.uns.paysys.modules.merc.entity.AuditOperation">
+    insert into AUDIT_OPERATION (ID, AUDIT_OPERAND_ID, AUDIT_RULE_ID, 
+      AUDIT_GROUP_ID, PREVIOUS_STATUS, POST_STATUS, 
+      ATTITUDE, VERSION, CREATE_USER, 
+      CREATE_TIME, UPDATE_USER, UPDATE_TIME
+      )
+    values (#{id,jdbcType=DECIMAL}, #{auditOperandId,jdbcType=DECIMAL}, #{auditRuleId,jdbcType=DECIMAL}, 
+      #{auditGroupId,jdbcType=DECIMAL}, #{previousStatus,jdbcType=DECIMAL}, #{postStatus,jdbcType=DECIMAL}, 
+      #{attitude,jdbcType=VARCHAR}, #{version,jdbcType=DECIMAL}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.AuditOperation">
+    insert into AUDIT_OPERATION
+     <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+      	select audit_operation_sequence.nextval from dual
+     </selectKey>
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="auditOperandId != null">
+        AUDIT_OPERAND_ID,
+      </if>
+      <if test="auditRuleId != null">
+        AUDIT_RULE_ID,
+      </if>
+      <if test="auditGroupId != null">
+        AUDIT_GROUP_ID,
+      </if>
+      <if test="previousStatus != null">
+        PREVIOUS_STATUS,
+      </if>
+      <if test="postStatus != null">
+        POST_STATUS,
+      </if>
+      <if test="attitude != null">
+        ATTITUDE,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="auditOperandId != null">
+        #{auditOperandId,jdbcType=DECIMAL},
+      </if>
+      <if test="auditRuleId != null">
+        #{auditRuleId,jdbcType=DECIMAL},
+      </if>
+      <if test="auditGroupId != null">
+        #{auditGroupId,jdbcType=DECIMAL},
+      </if>
+      <if test="previousStatus != null">
+        #{previousStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="postStatus != null">
+        #{postStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="attitude != null">
+        #{attitude,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.merc.entity.AuditOperation">
+    update AUDIT_OPERATION
+    <set>
+      <if test="auditOperandId != null">
+        AUDIT_OPERAND_ID = #{auditOperandId,jdbcType=DECIMAL},
+      </if>
+      <if test="auditRuleId != null">
+        AUDIT_RULE_ID = #{auditRuleId,jdbcType=DECIMAL},
+      </if>
+      <if test="auditGroupId != null">
+        AUDIT_GROUP_ID = #{auditGroupId,jdbcType=DECIMAL},
+      </if>
+      <if test="previousStatus != null">
+        PREVIOUS_STATUS = #{previousStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="postStatus != null">
+        POST_STATUS = #{postStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="attitude != null">
+        ATTITUDE = #{attitude,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.AuditOperation">
+    update AUDIT_OPERATION
+    set AUDIT_OPERAND_ID = #{auditOperandId,jdbcType=DECIMAL},
+      AUDIT_RULE_ID = #{auditRuleId,jdbcType=DECIMAL},
+      AUDIT_GROUP_ID = #{auditGroupId,jdbcType=DECIMAL},
+      PREVIOUS_STATUS = #{previousStatus,jdbcType=DECIMAL},
+      POST_STATUS = #{postStatus,jdbcType=DECIMAL},
+      ATTITUDE = #{attitude,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=DECIMAL},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="getAuditOperation" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from AUDIT_OPERATION
+    where audit_operand_id = #{auditOperandId,jdbcType=DECIMAL}
+    and audit_rule_id = #{auditRuleId,jdbcType=DECIMAL}
+  </select>
+  
+  <!-- 查询是否有下一审核步骤权限 -->
+  <select id="checkAuditPrivilege" resultType="java.lang.Long" parameterType="java.util.Map">
+  	select 
+			ago.user_info_id
+	 from 
+		audit_operation ao,
+		audit_step ast,
+		audit_group_user_info ago
+		where ao.audit_operand_id = #{auditOperandId,jdbcType=DECIMAL}
+		and ao.audit_rule_id = #{auditRuleId,jdbcType=DECIMAL}
+		and ast.audit_rule_id = #{auditRuleId,jdbcType=DECIMAL}
+		and ao.post_status = ast.audit_level
+		and ast.audit_group_id = ago.audit_group_id
+		and ago.user_info_id =  #{userId,jdbcType=DECIMAL}
+  </select>
+  
+</mapper>

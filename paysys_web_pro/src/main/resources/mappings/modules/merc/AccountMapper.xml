@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.AccountMapper">
+	<resultMap id="BaseResultMap" type="com.uns.paysys.modules.merc.entity.Account">
+		<result column="ACCOUNT_ID" jdbcType="VARCHAR" property="accountId" />
+		<result column="EMAIL" jdbcType="VARCHAR" property="email" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="LOGIN_PASSWORD" jdbcType="VARCHAR" property="loginPassword" />
+		<result column="PAY_PASSWORD" jdbcType="VARCHAR" property="payPassword" />
+		<result column="QUESTION" jdbcType="VARCHAR" property="question" />
+		<result column="ANSWER" jdbcType="VARCHAR" property="answer" />
+		<result column="ID_TYPE" jdbcType="VARCHAR" property="idType" />
+		<result column="ID_CODE" jdbcType="VARCHAR" property="idCode" />
+		<result column="ACCOUNT_TYPE" jdbcType="VARCHAR" property="accountType" />
+		<result column="ADDR" jdbcType="VARCHAR" property="addr" />
+		<result column="TEL" jdbcType="VARCHAR" property="tel" />
+		<result column="PROV_SEQ" jdbcType="DECIMAL" property="provSeq" />
+		<result column="CITY_SEQ" jdbcType="DECIMAL" property="citySeq" />
+		<result column="ZIP_CODE" jdbcType="VARCHAR" property="zipCode" />
+		<result column="FLAG" jdbcType="VARCHAR" property="flag" />
+		<result column="ACTIVE_CODE" jdbcType="VARCHAR" property="activeCode" />
+		<result column="OFFER_PERSON" jdbcType="VARCHAR" property="offerPerson" />
+		<result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+		<result column="STATUS" jdbcType="VARCHAR" property="status" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="DEFAULT_SUB_SEQ" jdbcType="DECIMAL" property="defaultSubSeq" />
+		<result column="GENDER" jdbcType="VARCHAR" property="gender" />
+		<result column="BIRTHDAY" jdbcType="DATE" property="birthday" />
+		<result column="KEY" jdbcType="VARCHAR" property="key" />
+		<result column="INFORM_MOBILE" jdbcType="VARCHAR" property="informMobile" />
+		<result column="MOB_STATUS" jdbcType="VARCHAR" property="mobStatus" />
+		<result column="MOB_ACTIVE_CODE" jdbcType="VARCHAR" property="mobActiveCode" />
+		<result column="MOB_LOGIN_PASS" jdbcType="VARCHAR" property="mobLoginPass" />
+		<result column="MOB_PAY_PASS" jdbcType="VARCHAR" property="mobPayPass" />
+		<result column="AUDIT_STATUS" jdbcType="VARCHAR" property="auditStatus" />
+		<result column="CHAIN_URL" jdbcType="VARCHAR" property="chainUrl" />
+		<result column="CHAIN_REMARK" jdbcType="VARCHAR" property="chainRemark" />
+		<result column="ID" jdbcType="DECIMAL" property="id" />
+		<result column="VERSION" jdbcType="DECIMAL" property="version" />
+		<result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+		<result column="CREATE_TIME" jdbcType="DATE" property="createTime" />
+		<result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+		<result column="UPDATE_TIME" jdbcType="DATE" property="updateTime" />
+		<result column="UPDATE_USER_SYSTEM" jdbcType="VARCHAR"
+			property="updateUserSystem" />
+		<result column="IVR_STATUS" jdbcType="VARCHAR" property="ivrStatus" />
+		<result column="IVR_LOGIN_PASSWORD" jdbcType="VARCHAR"
+			property="ivrLoginPassword" />
+		<result column="IVR_PAY_PASSWORD" jdbcType="VARCHAR" property="ivrPayPassword" />
+		<result column="INTRODUCE_ACCOUNT_ID" jdbcType="DECIMAL"
+			property="introduceAccountId" />
+		<result column="ACTIVATE_STATUS" jdbcType="VARCHAR" property="activateStatus" />
+		<result column="TOTAL_SCORES" jdbcType="DECIMAL" property="totalScores" />
+		<result column="SUMAMOUNT" jdbcType="DECIMAL" property="sumamount" />
+		<result column="AUTHENTICATION_STATUS" jdbcType="VARCHAR"
+			property="authenticationStatus" />
+		<result column="ENCRYPTCODE" jdbcType="VARCHAR" property="encryptcode" />
+		<result column="TRAN_AMOUNT" jdbcType="DECIMAL" property="tranAmount" />
+		<result column="AUTHENTICATION_NAME" jdbcType="VARCHAR"
+			property="authenticationName" />
+		<result column="AUTHENTICATION_ID_CODE" jdbcType="VARCHAR"
+			property="authenticationIdCode" />
+		<result column="EM_STATUS" jdbcType="VARCHAR" property="emStatus" />
+		<result column="RESET_PWD_CODE" jdbcType="VARCHAR" property="resetPwdCode" />
+		<result column="COMPANY_TYPE" jdbcType="VARCHAR" property="companyType" />
+		<result column="AUTHENTICATION_REJECT" jdbcType="OTHER"
+			property="authenticationReject" />
+		<result column="UPDATE_PWD_TIME" jdbcType="DATE" property="updatePwdTime" />
+		<result column="DYNAMIC_KEY" jdbcType="DECIMAL" property="dynamicKey" />
+		<result column="ID_EXPIRED_DATE" jdbcType="DATE" property="idExpiredDate" />
+		<result column="OCCUPATION" jdbcType="VARCHAR" property="occupation" />
+		<result column="NATIONALITY" jdbcType="VARCHAR" property="nationality" />
+		<result column="LEFT_MESSAGE" jdbcType="VARCHAR" property="leftMessage" />
+	</resultMap>
+
+
+
+	<sql id="Base_Column_List">
+		ACCOUNT_ID, EMAIL, NAME, LOGIN_PASSWORD, PAY_PASSWORD,
+		QUESTION, ANSWER, ID_TYPE,
+		ID_CODE, ACCOUNT_TYPE, ADDR, TEL, PROV_SEQ,
+		CITY_SEQ, ZIP_CODE, FLAG,
+		ACTIVE_CODE,
+		OFFER_PERSON, MOBILE, STATUS,
+		REMARK, DEFAULT_SUB_SEQ, GENDER, BIRTHDAY, KEY,
+		INFORM_MOBILE,
+		MOB_STATUS, MOB_ACTIVE_CODE, MOB_LOGIN_PASS, MOB_PAY_PASS,
+		AUDIT_STATUS,
+		CHAIN_URL,
+		CHAIN_REMARK, ID, VERSION, CREATE_USER,
+		CREATE_TIME, UPDATE_USER, UPDATE_TIME,
+		UPDATE_USER_SYSTEM,
+		IVR_STATUS,
+		IVR_LOGIN_PASSWORD, IVR_PAY_PASSWORD, INTRODUCE_ACCOUNT_ID,
+		ACTIVATE_STATUS,
+		TOTAL_SCORES, SUMAMOUNT, AUTHENTICATION_STATUS,
+		ENCRYPTCODE, TRAN_AMOUNT,
+		AUTHENTICATION_NAME,
+		AUTHENTICATION_ID_CODE,
+		EM_STATUS, RESET_PWD_CODE, COMPANY_TYPE, AUTHENTICATION_REJECT,
+		UPDATE_PWD_TIME, DYNAMIC_KEY, ID_EXPIRED_DATE, OCCUPATION,
+		NATIONALITY, LEFT_MESSAGE
+	</sql>
+	<sql id="Blob_Column_List">
+		CARD_PHOTO, PHOTO, CARDPHOTE_BACK, TEMP_CARDPHOTO,
+		TEMP_CARDPHOTE_BACK
+	</sql>
+
+
+
+
+	<!--查询商户分配列表 -->
+	<select id="accounts" resultType="java.util.Map" parameterType="String">
+		select
+		<include refid="Base_Column_List" />
+		from
+		Account acc
+		where acc.AUDIT_STATUS=2
+		and acc.ACCOUNT_TYPE='B'
+		and acc.id not in(select account_id from SPREADMERC_ACC where AUDIT_STATUS='2')
+		<if test="name != null and name !=''"> and acc.name like CONCAT(CONCAT('%', #{name,jdbcType=VARCHAR}), '%') </if>
+	     order by acc.UPDATE_TIME desc
+	</select>
+
+
+	<!--查询商户列表 -->
+	<select id="findAccountBySmId" resultType="java.util.Map" parameterType="java.math.BigDecimal">
+		select
+		acc.ID,
+		acc.Name,
+		acc.EMAIL,
+		acc.ACCOUNT_TYPE,
+		acc.AUDIT_STATUS,
+		acc.STATUS
+		from Account acc, spread_merchant_info info, spreadmerc_acc saa
+		where info.id = saa.spreadmerchant_id
+		and saa.account_id = acc.id
+        and acc.ACCOUNT_TYPE='B'
+        and acc.AUDIT_STATUS=2
+		and info.id =#{id}
+	</select>
+
+	<!--查询商户DEFAULT_SUB_SEQ -->
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+		select
+		acc.DEFAULT_SUB_SEQ
+		from Account acc
+		where acc.id =#{id}
+	</select>
+
+
+
+
+	<insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.Account">
+		insert into ACCOUNT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="accountId != null">
+				ACCOUNT_ID,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="loginPassword != null">
+				LOGIN_PASSWORD,
+			</if>
+			<if test="payPassword != null">
+				PAY_PASSWORD,
+			</if>
+			<if test="question != null">
+				QUESTION,
+			</if>
+			<if test="answer != null">
+				ANSWER,
+			</if>
+			<if test="idType != null">
+				ID_TYPE,
+			</if>
+			<if test="idCode != null">
+				ID_CODE,
+			</if>
+			<if test="accountType != null">
+				ACCOUNT_TYPE,
+			</if>
+			<if test="addr != null">
+				ADDR,
+			</if>
+			<if test="tel != null">
+				TEL,
+			</if>
+			<if test="provSeq != null">
+				PROV_SEQ,
+			</if>
+			<if test="citySeq != null">
+				CITY_SEQ,
+			</if>
+			<if test="zipCode != null">
+				ZIP_CODE,
+			</if>
+			<if test="flag != null">
+				FLAG,
+			</if>
+			<if test="activeCode != null">
+				ACTIVE_CODE,
+			</if>
+			<if test="offerPerson != null">
+				OFFER_PERSON,
+			</if>
+			<if test="mobile != null">
+				MOBILE,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+			<if test="defaultSubSeq != null">
+				DEFAULT_SUB_SEQ,
+			</if>
+			<if test="gender != null">
+				GENDER,
+			</if>
+			<if test="birthday != null">
+				BIRTHDAY,
+			</if>
+			<if test="key != null">
+				KEY,
+			</if>
+			<if test="informMobile != null">
+				INFORM_MOBILE,
+			</if>
+			<if test="mobStatus != null">
+				MOB_STATUS,
+			</if>
+			<if test="mobActiveCode != null">
+				MOB_ACTIVE_CODE,
+			</if>
+			<if test="mobLoginPass != null">
+				MOB_LOGIN_PASS,
+			</if>
+			<if test="mobPayPass != null">
+				MOB_PAY_PASS,
+			</if>
+			<if test="auditStatus != null">
+				AUDIT_STATUS,
+			</if>
+			<if test="chainUrl != null">
+				CHAIN_URL,
+			</if>
+			<if test="chainRemark != null">
+				CHAIN_REMARK,
+			</if>
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="version != null">
+				VERSION,
+			</if>
+			<if test="createUser != null">
+				CREATE_USER,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateUser != null">
+				UPDATE_USER,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="updateUserSystem != null">
+				UPDATE_USER_SYSTEM,
+			</if>
+			<if test="ivrStatus != null">
+				IVR_STATUS,
+			</if>
+			<if test="ivrLoginPassword != null">
+				IVR_LOGIN_PASSWORD,
+			</if>
+			<if test="ivrPayPassword != null">
+				IVR_PAY_PASSWORD,
+			</if>
+			<if test="introduceAccountId != null">
+				INTRODUCE_ACCOUNT_ID,
+			</if>
+			<if test="activateStatus != null">
+				ACTIVATE_STATUS,
+			</if>
+			<if test="totalScores != null">
+				TOTAL_SCORES,
+			</if>
+			<if test="sumamount != null">
+				SUMAMOUNT,
+			</if>
+			<if test="authenticationStatus != null">
+				AUTHENTICATION_STATUS,
+			</if>
+			<if test="encryptcode != null">
+				ENCRYPTCODE,
+			</if>
+			<if test="tranAmount != null">
+				TRAN_AMOUNT,
+			</if>
+			<if test="authenticationName != null">
+				AUTHENTICATION_NAME,
+			</if>
+			<if test="authenticationIdCode != null">
+				AUTHENTICATION_ID_CODE,
+			</if>
+			<if test="emStatus != null">
+				EM_STATUS,
+			</if>
+			<if test="resetPwdCode != null">
+				RESET_PWD_CODE,
+			</if>
+			<if test="companyType != null">
+				COMPANY_TYPE,
+			</if>
+			<if test="authenticationReject != null">
+				AUTHENTICATION_REJECT,
+			</if>
+			<if test="updatePwdTime != null">
+				UPDATE_PWD_TIME,
+			</if>
+			<if test="dynamicKey != null">
+				DYNAMIC_KEY,
+			</if>
+			<if test="idExpiredDate != null">
+				ID_EXPIRED_DATE,
+			</if>
+			<if test="occupation != null">
+				OCCUPATION,
+			</if>
+			<if test="nationality != null">
+				NATIONALITY,
+			</if>
+			<if test="leftMessage != null">
+				LEFT_MESSAGE,
+			</if>
+			<if test="cardPhoto != null">
+				CARD_PHOTO,
+			</if>
+			<if test="photo != null">
+				PHOTO,
+			</if>
+			<if test="cardphoteBack != null">
+				CARDPHOTE_BACK,
+			</if>
+			<if test="tempCardphoto != null">
+				TEMP_CARDPHOTO,
+			</if>
+			<if test="tempCardphoteBack != null">
+				TEMP_CARDPHOTE_BACK,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="accountId != null">
+				#{accountId,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="loginPassword != null">
+				#{loginPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="payPassword != null">
+				#{payPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="question != null">
+				#{question,jdbcType=VARCHAR},
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=VARCHAR},
+			</if>
+			<if test="idType != null">
+				#{idType,jdbcType=VARCHAR},
+			</if>
+			<if test="idCode != null">
+				#{idCode,jdbcType=VARCHAR},
+			</if>
+			<if test="accountType != null">
+				#{accountType,jdbcType=VARCHAR},
+			</if>
+			<if test="addr != null">
+				#{addr,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null">
+				#{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="provSeq != null">
+				#{provSeq,jdbcType=DECIMAL},
+			</if>
+			<if test="citySeq != null">
+				#{citySeq,jdbcType=DECIMAL},
+			</if>
+			<if test="zipCode != null">
+				#{zipCode,jdbcType=VARCHAR},
+			</if>
+			<if test="flag != null">
+				#{flag,jdbcType=VARCHAR},
+			</if>
+			<if test="activeCode != null">
+				#{activeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="offerPerson != null">
+				#{offerPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultSubSeq != null">
+				#{defaultSubSeq,jdbcType=DECIMAL},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="key != null">
+				#{key,jdbcType=VARCHAR},
+			</if>
+			<if test="informMobile != null">
+				#{informMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="mobStatus != null">
+				#{mobStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="mobActiveCode != null">
+				#{mobActiveCode,jdbcType=VARCHAR},
+			</if>
+			<if test="mobLoginPass != null">
+				#{mobLoginPass,jdbcType=VARCHAR},
+			</if>
+			<if test="mobPayPass != null">
+				#{mobPayPass,jdbcType=VARCHAR},
+			</if>
+			<if test="auditStatus != null">
+				#{auditStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="chainUrl != null">
+				#{chainUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="chainRemark != null">
+				#{chainRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="id != null">
+				#{id,jdbcType=DECIMAL},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=DECIMAL},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=DATE},
+			</if>
+			<if test="updateUserSystem != null">
+				#{updateUserSystem,jdbcType=VARCHAR},
+			</if>
+			<if test="ivrStatus != null">
+				#{ivrStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="ivrLoginPassword != null">
+				#{ivrLoginPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="ivrPayPassword != null">
+				#{ivrPayPassword,jdbcType=VARCHAR},
+			</if>
+			<if test="introduceAccountId != null">
+				#{introduceAccountId,jdbcType=DECIMAL},
+			</if>
+			<if test="activateStatus != null">
+				#{activateStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="totalScores != null">
+				#{totalScores,jdbcType=DECIMAL},
+			</if>
+			<if test="sumamount != null">
+				#{sumamount,jdbcType=DECIMAL},
+			</if>
+			<if test="authenticationStatus != null">
+				#{authenticationStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="encryptcode != null">
+				#{encryptcode,jdbcType=VARCHAR},
+			</if>
+			<if test="tranAmount != null">
+				#{tranAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="authenticationName != null">
+				#{authenticationName,jdbcType=VARCHAR},
+			</if>
+			<if test="authenticationIdCode != null">
+				#{authenticationIdCode,jdbcType=VARCHAR},
+			</if>
+			<if test="emStatus != null">
+				#{emStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="resetPwdCode != null">
+				#{resetPwdCode,jdbcType=VARCHAR},
+			</if>
+			<if test="companyType != null">
+				#{companyType,jdbcType=VARCHAR},
+			</if>
+			<if test="authenticationReject != null">
+				#{authenticationReject,jdbcType=OTHER},
+			</if>
+			<if test="updatePwdTime != null">
+				#{updatePwdTime,jdbcType=DATE},
+			</if>
+			<if test="dynamicKey != null">
+				#{dynamicKey,jdbcType=DECIMAL},
+			</if>
+			<if test="idExpiredDate != null">
+				#{idExpiredDate,jdbcType=DATE},
+			</if>
+			<if test="occupation != null">
+				#{occupation,jdbcType=VARCHAR},
+			</if>
+			<if test="nationality != null">
+				#{nationality,jdbcType=VARCHAR},
+			</if>
+			<if test="leftMessage != null">
+				#{leftMessage,jdbcType=VARCHAR},
+			</if>
+			<if test="cardPhoto != null">
+				#{cardPhoto,jdbcType=BLOB},
+			</if>
+			<if test="photo != null">
+				#{photo,jdbcType=BLOB},
+			</if>
+			<if test="cardphoteBack != null">
+				#{cardphoteBack,jdbcType=BLOB},
+			</if>
+			<if test="tempCardphoto != null">
+				#{tempCardphoto,jdbcType=BLOB},
+			</if>
+			<if test="tempCardphoteBack != null">
+				#{tempCardphoteBack,jdbcType=BLOB},
+			</if>
+		</trim>
+	</insert>
+
+
+
+
+
+
+</mapper>

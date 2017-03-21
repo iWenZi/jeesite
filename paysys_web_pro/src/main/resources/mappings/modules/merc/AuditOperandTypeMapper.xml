@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uns.paysys.modules.merc.dao.AuditOperandTypeMapper">
+  <resultMap id="BaseResultMap" type="com.uns.paysys.modules.merc.entity.AuditOperandType">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="OPERAND_CLASS" jdbcType="VARCHAR" property="operandClass" />
+    <result column="ACTION_FLAG" jdbcType="VARCHAR" property="actionFlag" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="VERSION" jdbcType="DECIMAL" property="version" />
+    <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="SYSTEM_TYPE" jdbcType="DECIMAL" property="systemType" />
+    <result column="RULE_UPDATABLE" jdbcType="DECIMAL" property="ruleUpdatable" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, OPERAND_CLASS, ACTION_FLAG, NAME, VERSION, CREATE_USER, CREATE_TIME, UPDATE_USER, 
+    UPDATE_TIME, SYSTEM_TYPE, RULE_UPDATABLE
+  </sql>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from AUDIT_OPERAND_TYPE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from AUDIT_OPERAND_TYPE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.uns.paysys.modules.merc.entity.AuditOperandType">
+    insert into AUDIT_OPERAND_TYPE (ID, OPERAND_CLASS, ACTION_FLAG, 
+      NAME, VERSION, CREATE_USER, 
+      CREATE_TIME, UPDATE_USER, UPDATE_TIME, 
+      SYSTEM_TYPE, RULE_UPDATABLE)
+    values (#{id,jdbcType=DECIMAL}, #{operandClass,jdbcType=VARCHAR}, #{actionFlag,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{version,jdbcType=DECIMAL}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{systemType,jdbcType=DECIMAL}, #{ruleUpdatable,jdbcType=DECIMAL})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.uns.paysys.modules.merc.entity.AuditOperandType">
+    insert into AUDIT_OPERAND_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="operandClass != null">
+        OPERAND_CLASS,
+      </if>
+      <if test="actionFlag != null">
+        ACTION_FLAG,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="createUser != null">
+        CREATE_USER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="systemType != null">
+        SYSTEM_TYPE,
+      </if>
+      <if test="ruleUpdatable != null">
+        RULE_UPDATABLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="operandClass != null">
+        #{operandClass,jdbcType=VARCHAR},
+      </if>
+      <if test="actionFlag != null">
+        #{actionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemType != null">
+        #{systemType,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleUpdatable != null">
+        #{ruleUpdatable,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.uns.paysys.modules.merc.entity.AuditOperandType">
+    update AUDIT_OPERAND_TYPE
+    <set>
+      <if test="operandClass != null">
+        OPERAND_CLASS = #{operandClass,jdbcType=VARCHAR},
+      </if>
+      <if test="actionFlag != null">
+        ACTION_FLAG = #{actionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="createUser != null">
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemType != null">
+        SYSTEM_TYPE = #{systemType,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleUpdatable != null">
+        RULE_UPDATABLE = #{ruleUpdatable,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uns.paysys.modules.merc.entity.AuditOperandType">
+    update AUDIT_OPERAND_TYPE
+    set OPERAND_CLASS = #{operandClass,jdbcType=VARCHAR},
+      ACTION_FLAG = #{actionFlag,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=DECIMAL},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      SYSTEM_TYPE = #{systemType,jdbcType=DECIMAL},
+      RULE_UPDATABLE = #{ruleUpdatable,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="getAuditOperandType" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	    select 
+    <include refid="Base_Column_List" />
+    from AUDIT_OPERAND_TYPE
+    where operand_class = #{operandClass,jdbcType=VARCHAR}
+    and action_flag = #{actionFlag,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findAllList" resultMap="BaseResultMap">
+  	    select 
+    <include refid="Base_Column_List" />
+    from AUDIT_OPERAND_TYPE
+  </select>
+  
+  
+</mapper>
